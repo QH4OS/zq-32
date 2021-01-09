@@ -58,6 +58,11 @@ Only runs the instruction if the flags match the field
 1000 shr: A = B >> C (Shifts into carry flag before falling)
 1001 rol: A = B rol C 
 1010 ror: A = B ror C
+1011 Ldd: A = [B + C] (only 2 bytes)
+1100 Ldb: A = [B + C] (Only 1 byte)
+1101 Std: [B + C] = A (Only 2 bytes)
+1110 Stb: [B + C] = A (Only 1 byte)
+1111 Six: A = [B six C], if C = 0 then sign extends from 8 bit to 16, if C = 1 sign extends from 16 bit to 32 bit, if C = 2 it sign preserves from 32 bit to 16, if C = 3 it sign preserves from 16 bit to 8 bit
 ```
 # IO
 ## Interrupts
@@ -73,9 +78,14 @@ On a interrupt these occur:
 - When a keypress happens the single interrupt on the cpu fires
 - At address 0xFFFFFFFF
 - A read will give each keypress in a FIFO configuration, and return 0x00 if no keypress is in buffer
+- Data read will be ASCII
 ```
 ### Frame Buffter
 ```
-- Each pixel in the 320x200
+- Each pixel in the 320x200 has 1 byte dictating what color it is
+- This resides in memory 0xFFFF0000 - 0xFFFFFA00
 ```
 ### Text Out
+```
+- At 0xFFFFFFFE anything written will be dumped into a tty output (ASCII)
+```
