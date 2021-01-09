@@ -67,4 +67,15 @@ On a interrupt these occur:
 2: ri = rv
 3: rv = 0 (to disable further interrupts)
 ```
-
+## Devices
+### Keyboard
+```
+- When a keypress happens the single interrupt on the cpu fires
+- At address 0xFFFFFFFF
+- A read will give each keypress in a FIFO configuration, and return 0x00 if no keypress is in buffer
+```
+### Frame Buffter
+```
+- Each pixel in the 320x200
+```
+### Text Out
